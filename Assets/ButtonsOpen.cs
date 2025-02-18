@@ -9,7 +9,13 @@ public class ButtonsOpen : MonoBehaviour
 
     private RectTransform _rectTransform;
 
-    private void Awake() => _rectTransform = GetComponent<RectTransform>();
+    private Rect _defaultRectPosition;
+
+    private void Awake()
+    {
+        _rectTransform = GetComponent<RectTransform>();
+        _defaultRectPosition = _rectTransform.rect;
+    }
 
     private void Start() => OpenButtonsAnimation();
     
