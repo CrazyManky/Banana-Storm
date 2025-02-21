@@ -11,6 +11,7 @@ namespace _Project.Screpts.MenuScreen
     {
         [SerializeField] private RectTransform _instancePoint;
         [SerializeField] private RectTransform _instanceScreenPoint;
+        [SerializeField] private GameEntryPoint _entryPoint;
 
         [Header("MenuButtons")] [SerializeField]
         private Image[] _images;
@@ -37,6 +38,12 @@ namespace _Project.Screpts.MenuScreen
             _viewInstance.GetComponent<RectTransform>().position = _instancePoint.position;
             _viewInstance.Init(presenter);
             _activeScreen = _viewInstance;
+        }
+
+        public void GamePlay()
+        {
+            _entryPoint.Initialize();
+            gameObject.SetActive(false);
         }
 
         private void DisableAllButtonsView()
