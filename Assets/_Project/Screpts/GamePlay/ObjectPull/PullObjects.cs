@@ -1,20 +1,24 @@
 using System.Collections.Generic;
+using _Project.Screpts.GamePlay.GamePlayFinalStateMashine.Services;
 using _Project.Screpts.GamePlay.InstancePanel;
+using Services;
 using UnityEngine;
 
 namespace _Project.Screpts.GamePlay.ObjectPull
 {
-    public class PullObjects<T> where T : MonoBehaviour, IPullObject
+    public class PullObjects<T> where T : MonoBehaviour, IPullObject, IPauseItem
     {
         private T _item;
         public List<T> ListItems { get; private set; }
         private int _countItems;
+        private PauseService _pauseService;
 
         public PullObjects(T item, int count)
         {
             _item = item;
             _countItems = count;
             ListItems = new List<T>();
+            _pauseService = ServiceLocator.Instance.GetService<PauseService>();
         }
 
         public void Initialize()
@@ -23,6 +27,7 @@ namespace _Project.Screpts.GamePlay.ObjectPull
             {
                 var instanceItem = Object.Instantiate(_item);
                 instanceItem.Active(false);
+                _pauseService.AddPauseItem(instanceItem);
                 ListItems.Add(instanceItem);
             }
         }
@@ -49,6 +54,13 @@ namespace _Project.Screpts.GamePlay.ObjectPull
         public void RemoveItem(T item)
         {
             item.Active(false);
+        }
+
+        public void DisposeObject()
+        {
+            ListItems.ForEach((item) => { Object.Destroy(item.gameObject); });
+            ListItems.Clear();
+            ListItems = null;
         }
     }
 }

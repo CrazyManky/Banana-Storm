@@ -1,7 +1,10 @@
+using _Project.Screpts.Elements;
+using _Project.Screpts.GamePlay.GamePlayFinalStateMashine.Services;
 using _Project.Screpts.LiderBoardScreen;
 using _Project.Screpts.MenuScreen.SettingsScreen.SettingsData;
 using _Project.Screpts.MenuScreen.SettingsScreen.SettingsPresent;
 using _Project.Screpts.MenuScreen.SettingsScreen.SettingsView;
+using Services;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,10 +24,23 @@ namespace _Project.Screpts.MenuScreen
         [Header("Lidear")] [SerializeField] private LidearScreen _lidearScreen;
 
         private View _activeScreen;
+        private PauseService _pauseService = new();
         private bool _activeShop = false;
         private bool _activeLiderBoard = false;
+        private ServiceLocator _serviceLocator;
 
         private void Awake() => DisableAllButtonsView();
+
+        private void Start()
+        {
+            ServiceLocator.Init();
+            _serviceLocator = ServiceLocator.Instance;
+            _serviceLocator.AddService(_pauseService);
+            _serviceLocator.AddService(_entryPoint);
+        }
+
+        public void MenuOpen() => gameObject.SetActive(true);
+
 
         public void OpenSettingsMenu()
         {
@@ -43,7 +59,7 @@ namespace _Project.Screpts.MenuScreen
         public void GamePlay()
         {
             _entryPoint.Initialize();
-            gameObject.SetActive(false);
+            MenuClose();
         }
 
         private void DisableAllButtonsView()
@@ -80,6 +96,11 @@ namespace _Project.Screpts.MenuScreen
             _images[1].enabled = true;
             _activeScreen = Instantiate(_lidearScreen, _instanceScreenPoint);
             _activeScreen.Init();
+        }
+
+        public void MenuClose()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

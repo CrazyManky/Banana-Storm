@@ -8,5 +8,14 @@ namespace _Project.Screpts.SOConfigs
         [SerializeField] private int _playerWallet;
 
         public int PlayerValue => _playerWallet;
+        
+        public void Load() => _playerWallet = PlayerPrefs.GetInt("PlayerWallet");
+        
+        public void AddValue(int value)
+        {
+            var valueResult = _playerWallet + value;
+            PlayerPrefs.SetInt("PlayerWallet", valueResult);
+            _playerWallet = valueResult;
+        }
     }
 }
