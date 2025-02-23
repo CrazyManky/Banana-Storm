@@ -1084,7 +1084,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1365,11 +1365,11 @@ RectTransform:
   - {fileID: 1296002616}
   m_Father: {fileID: 3628394380766042179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1211.9, y: 327.42}
-  m_Pivot: {x: 1, y: 1}
+  m_SizeDelta: {x: 0, y: 327.42}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1062204883
 GameObject:
   m_ObjectHideFlags: 0
@@ -1596,7 +1596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1296002616
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1636,7 +1636,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rating
+  m_text: '
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0b84d7f02007c5540b35cb38142e9a8a, type: 2}
   m_sharedMaterial: {fileID: -5111143448795958871, guid: 0b84d7f02007c5540b35cb38142e9a8a, type: 2}
@@ -2104,12 +2106,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1206, y: 2622}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -3091,7 +3093,7 @@ MonoBehaviour:
     m_Right: 36
     m_Top: 53
     m_Bottom: 135
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_Spacing: 9.56
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -3549,6 +3551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94194880fc0489248b8a9a3708cc22d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _menuText: {fileID: 1296002617}
   _audioManager: {fileID: 519420035}
   _playerWalletView: {fileID: 7341045622723077028}
   _backgroundImage: {fileID: 226180198007141360}
@@ -3885,7 +3888,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -62.09, y: 0}
+  m_AnchoredPosition: {x: -62.090088, y: 0}
   m_SizeDelta: {x: 330.4, y: 138.88}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &6104010317847718996

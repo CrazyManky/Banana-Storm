@@ -26,11 +26,13 @@ namespace _Project.Screpts
 
         public void PlayGame()
         {
+            _menuMusic.Stop();
             _gameSound.Play();
         }
 
         public void PlayMenu()
         {
+            _gameSound.Stop();
             _menuMusic.Play();
         }
 

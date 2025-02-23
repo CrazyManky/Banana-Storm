@@ -5,6 +5,7 @@ using _Project.Screpts.MenuScreen.SettingsScreen.SettingsData;
 using _Project.Screpts.MenuScreen.SettingsScreen.SettingsPresent;
 using _Project.Screpts.MenuScreen.SettingsScreen.SettingsView;
 using Services;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ namespace _Project.Screpts.MenuScreen
 {
     public class MenuScreen : MonoBehaviour
     {
+        [SerializeField] private TextMeshProUGUI _menuText;
         [SerializeField] private AudioManager _audioManager;
         [SerializeField] private PlayerValetView _playerWalletView;
         [SerializeField] private Image _backgroundImage;
@@ -38,6 +40,7 @@ namespace _Project.Screpts.MenuScreen
         private bool _activeLiderBoard = false;
         private ServiceLocator _serviceLocator;
 
+
         private void Awake() => DisableAllButtonsView();
 
         private void Start()
@@ -52,6 +55,7 @@ namespace _Project.Screpts.MenuScreen
 
         public void MenuOpen()
         {
+            _menuText.text = "";
             _audioManager.PlayMenu();
             gameObject.SetActive(true);
         }
@@ -59,6 +63,7 @@ namespace _Project.Screpts.MenuScreen
 
         public void OpenSettingsMenu()
         {
+            _menuText.text = "";
             _audioManager.PlayButtonClick();
             if (_activeScreen != null)
                 _activeScreen.Close();
@@ -94,13 +99,15 @@ namespace _Project.Screpts.MenuScreen
 
         public void ShowShopActive()
         {
-            _audioManager.PlayGame();
+            _menuText.text = "Store";
+            _audioManager.PlayButtonClick();
             if (_activeShop)
             {
                 DisableAllButtonsView();
                 _activeScreen.Close();
                 _backgroundImage.sprite = _defaultBackground;
                 _activeShop = false;
+                _menuText.text = "";
                 return;
             }
 
@@ -117,12 +124,14 @@ namespace _Project.Screpts.MenuScreen
 
         public void ShowRatingActive()
         {
-            _audioManager.PlayGame();
+            _menuText.text = "rating";
+            _audioManager.PlayButtonClick();
             if (_activeLiderBoard)
             {
                 DisableAllButtonsView();
                 _activeScreen.Close();
                 _activeLiderBoard = false;
+                _menuText.text = "";
                 return;
             }
 
