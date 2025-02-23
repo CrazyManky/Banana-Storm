@@ -13,11 +13,11 @@ namespace _Project.Screpts.GamePlay.GamePlayFinalStateMashine
 
         private IStateGamePlay _activeState;
 
-        public GameFSM(PanelInstance panelInstance, GameUI _gameUI, PlayerInstance playerInstance)
+        public GameFSM(PanelInstance panelInstance, GameUI _gameUI, PlayerInstance playerInstance,GameEndTimer gameEndTimer)
         {
             _states = new Dictionary<Type, IStateGamePlay>()
             {
-                [typeof(GamePlayState)] = new GamePlayState(panelInstance, _gameUI, playerInstance),
+                [typeof(GamePlayState)] = new GamePlayState(panelInstance, _gameUI, playerInstance,gameEndTimer),
                 [typeof(DisableState)] = new DisableState(),
             };
         }
@@ -35,14 +35,17 @@ namespace _Project.Screpts.GamePlay.GamePlayFinalStateMashine
         private PlayerInstance _playerInstance;
         private PanelInstance _panelInstance;
         private GameUI _gameUI;
+        private GameEndTimer _gameEndTimer;
         private PauseService _pauseService;
 
-        public GamePlayState(PanelInstance panelInstance, GameUI gameUI, PlayerInstance playerInstance)
+        public GamePlayState(PanelInstance panelInstance, GameUI gameUI, PlayerInstance playerInstance,
+            GameEndTimer gameEndTimer)
         {
             _playerInstance = playerInstance;
             _panelInstance = panelInstance;
             _gameUI = gameUI;
             _pauseService = ServiceLocator.Instance.GetService<PauseService>();
+            _gameEndTimer = gameEndTimer;
         }
 
         public void EnterState()
@@ -51,6 +54,8 @@ namespace _Project.Screpts.GamePlay.GamePlayFinalStateMashine
             _gameUI.Init();
             _playerInstance.Init();
             _pauseService.DisablePause();
+            _gameEndTimer.Init();
+            _gameEndTimer.OnTimerEnd += _gameUI.ShowGameWin;
         }
 
         public void ExitState()
@@ -58,6 +63,8 @@ namespace _Project.Screpts.GamePlay.GamePlayFinalStateMashine
             _panelInstance.Dispose();
             _gameUI.Dispose();
             _playerInstance.DisableJumper();
+            _gameEndTimer.DisableTimer();
+            _gameEndTimer.OnTimerEnd -= _gameUI.ShowGameWin;
         }
     }
 

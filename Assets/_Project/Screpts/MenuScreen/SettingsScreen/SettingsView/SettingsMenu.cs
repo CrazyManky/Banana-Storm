@@ -1,6 +1,7 @@
 using _Project.Screpts.Elements;
 using _Project.Screpts.MenuScreen.SettingsScreen.SettingsPresent;
 using _Project.Screpts.SOConfigs;
+using Services;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,8 +13,10 @@ namespace _Project.Screpts.MenuScreen.SettingsScreen.SettingsView
         [SerializeField] private Slider _sliderMusic;
         [SerializeField] private Slider _sliderSound;
         [SerializeField] private SoundConfigs _soundConfigs;
+        [SerializeField] private PrivacyScreen _privacyScreen;
 
         private SettingsPresenter _presenter;
+        private AudioManager _audioManager;
 
         public void OnDisable()
         {
@@ -21,8 +24,12 @@ namespace _Project.Screpts.MenuScreen.SettingsScreen.SettingsView
             _sliderSound.onValueChanged.RemoveListener(_presenter.SetDataVolume);
         }
 
-        public override void Init() => _screenOpen.Open();
-        
+        public override void Init()
+        {
+            _audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+            _screenOpen.Open();
+        }
+
         public override void Init(SettingsPresenter presenter)
         {
             _presenter = presenter;
@@ -31,6 +38,12 @@ namespace _Project.Screpts.MenuScreen.SettingsScreen.SettingsView
             _sliderMusic.value = _soundConfigs.VolumeMusic;
             _sliderMusic.onValueChanged.AddListener(_presenter.SetDataMusic);
             _sliderSound.onValueChanged.AddListener(_presenter.SetDataVolume);
+        }
+
+        public void ShowPrivacyScreen()
+        {
+            _audioManager.PlayButtonClick();
+            Instantiate(_privacyScreen, transform);
         }
 
         public override void Close() => Destroy(gameObject);

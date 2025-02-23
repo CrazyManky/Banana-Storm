@@ -11,14 +11,22 @@ namespace _Project.Screpts.SOConfigs
         public float VolumeSound => _volumeSound;
         public float VolumeMusic => _volumeMusic;
 
+        public void Load()
+        {
+            _volumeSound = PlayerPrefs.GetFloat("SoundVolume", 1f);
+            _volumeMusic = PlayerPrefs.GetFloat("SoundVolume", 1f);
+        }
+
         public void SetDataMusic(float musicVolume)
         {
             _volumeMusic = Mathf.Max(0f, musicVolume);
+            PlayerPrefs.SetFloat("VolumeMusic", _volumeMusic);
         }
 
         public void SetDataSound(float soundVolume)
         {
             _volumeSound = Mathf.Max(0f, soundVolume);
+            PlayerPrefs.SetFloat("VolumeSound", _volumeSound);
         }
     }
 }

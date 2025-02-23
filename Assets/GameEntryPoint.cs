@@ -14,14 +14,15 @@ public class GameEntryPoint : MonoBehaviour, IService
     [SerializeField] private GameUI _gameUI;
     [SerializeField] private PlayerInstance _playerInstance;
     [SerializeField] private PlayerValetView _playerValetView;
+    [SerializeField] private GameEndTimer _gameEndTimer;
 
     public GameFSM GameFSM;
 
     public void Initialize()
     {
-        ServiceLocator.Instance.AddService(_playerValetView);
         gameObject.SetActive(true);
-        GameFSM = new GameFSM(_panelInstance, _gameUI, _playerInstance);
+        ServiceLocator.Instance.AddService(_playerValetView);
+        GameFSM = new GameFSM(_panelInstance, _gameUI, _playerInstance,_gameEndTimer);
         GameFSM.EnterState<GamePlayState>();
     }
 

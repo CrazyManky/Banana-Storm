@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1547ffd4e96bf8644ba60f18c25081e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 6938328966508485916}
   _jumpForce: 1
 --- !u!50 &818431353612580111
 Rigidbody2D:

@@ -48,14 +48,11 @@ namespace _Project.Screpts.GamePlay.InstancePanel
         {
             if (other.TryGetComponent<Jumper>(out var jumper))
             {
+                IDisabled = true;
                 _spriteRenderer.DOKill();
-                _spriteRenderer.DOFade(0f, 1.5f)
+                _spriteRenderer.DOFade(0f, 2f)
                     .SetUpdate(true)
-                    .OnComplete(() =>
-                    {
-                        IDisabled = true;
-                        OnDisabled?.Invoke(_value);
-                    });
+                    .OnComplete(() => { OnDisabled?.Invoke(_value); });
             }
         }
 
@@ -80,7 +77,7 @@ namespace _Project.Screpts.GamePlay.InstancePanel
         }
 
         public void PauseActive() => _pauseActive = true;
-        
+
         public void DisablePause() => _pauseActive = false;
     }
 

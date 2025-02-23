@@ -16,7 +16,7 @@ namespace _Project.Screpts.LiderBoardScreen
 
         public override void Close()
         {
-            Destroy(gameObject);
+           _screenOpen.Close();
         }
     }
 }

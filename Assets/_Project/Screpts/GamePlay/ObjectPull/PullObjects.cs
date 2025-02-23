@@ -8,14 +8,14 @@ namespace _Project.Screpts.GamePlay.ObjectPull
 {
     public class PullObjects<T> where T : MonoBehaviour, IPullObject, IPauseItem
     {
-        private T _item;
+        private T[] _itemPrefabs;
         public List<T> ListItems { get; private set; }
         private int _countItems;
         private PauseService _pauseService;
 
-        public PullObjects(T item, int count)
+        public PullObjects(T itemOne, T itemTwo, T itemFree, int count)
         {
-            _item = item;
+            _itemPrefabs = new T[] { itemOne, itemTwo, itemFree };
             _countItems = count;
             ListItems = new List<T>();
             _pauseService = ServiceLocator.Instance.GetService<PauseService>();
@@ -23,32 +23,30 @@ namespace _Project.Screpts.GamePlay.ObjectPull
 
         public void Initialize()
         {
-            for (int i = 0; i <= _countItems; i++)
+            for (int i = 0; i < _countItems; i++)
             {
-                var instanceItem = Object.Instantiate(_item);
+                var instanceItem = Object.Instantiate(GetRandomPrefab()); // Создаем случайный объект
                 instanceItem.Active(false);
                 _pauseService.AddPauseItem(instanceItem);
                 ListItems.Add(instanceItem);
             }
         }
 
-        public T GetItem(Transform transform)
+        public T GetItem(Transform spawnPoint)
         {
-            for (int i = 0; i <= ListItems.Count; i++)
+            foreach (var item in ListItems)
             {
-                if (!ListItems[i].IActive)
+                if (!item.IActive)
                 {
-                    ListItems[i].Active(true);
-                    ListItems[i].transform.SetParent(transform);
-                    ListItems[i].transform.position = transform.position;
-                    return ListItems[i];
+                    ActivateItem(item, spawnPoint);
+                    return item;
                 }
             }
 
-            var instanceItem = Object.Instantiate(_item);
-            instanceItem.Active(false);
-            ListItems.Add(instanceItem);
-            return instanceItem;
+            var newItem = Object.Instantiate(GetRandomPrefab());
+            ActivateItem(newItem, spawnPoint);
+            ListItems.Add(newItem);
+            return newItem;
         }
 
         public void RemoveItem(T item)
@@ -58,9 +56,24 @@ namespace _Project.Screpts.GamePlay.ObjectPull
 
         public void DisposeObject()
         {
-            ListItems.ForEach((item) => { Object.Destroy(item.gameObject); });
+            foreach (var item in ListItems)
+            {
+                Object.Destroy(item.gameObject);
+            }
+
             ListItems.Clear();
-            ListItems = null;
+        }
+
+        private T GetRandomPrefab()
+        {
+            return _itemPrefabs[Random.Range(0, _itemPrefabs.Length)];
+        }
+
+        private void ActivateItem(T item, Transform spawnPoint)
+        {
+            item.Active(true);
+            item.transform.SetParent(spawnPoint);
+            item.transform.position = spawnPoint.position;
         }
     }
 }

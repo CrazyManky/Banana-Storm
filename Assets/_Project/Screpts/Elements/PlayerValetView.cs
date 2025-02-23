@@ -5,10 +5,12 @@ using UnityEngine;
 
 namespace _Project.Screpts.Elements
 {
-    public class PlayerValetView : MonoBehaviour , IService
+    public class PlayerValetView : MonoBehaviour, IService
     {
         [SerializeField] private PlayerWallet _playerWallet;
         [SerializeField] private TextMeshProUGUI _textValue;
+
+        private void OnEnable() => _playerWallet.OnChange += Refresh;
 
         private void Awake()
         {
@@ -21,5 +23,12 @@ namespace _Project.Screpts.Elements
             _playerWallet.AddValue(value);
             _textValue.text = $"{_playerWallet.PlayerValue}";
         }
+
+        public void Refresh()
+        {
+            _textValue.text = $"{_playerWallet.PlayerValue}";
+        }
+
+        private void OnDisable() => _playerWallet.OnChange -= Refresh;
     }
 }
