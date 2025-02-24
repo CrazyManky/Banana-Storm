@@ -26,12 +26,12 @@ namespace _Project.Screpts.MenuScreen.SettingsScreen.SettingsView
 
         public override void Init()
         {
-            _audioManager = ServiceLocator.Instance.GetService<AudioManager>();
-            _screenOpen.Open();
+            
         }
 
         public override void Init(SettingsPresenter presenter)
         {
+            _audioManager = ServiceLocator.Instance.GetService<AudioManager>();
             _presenter = presenter;
             _screenOpen.Open();
             _sliderSound.value = _soundConfigs.VolumeSound;
